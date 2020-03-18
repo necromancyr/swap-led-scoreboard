@@ -7,7 +7,7 @@ import os
 
 
 killallcmd = "sudo supervisorctl stop all" # command to kill all supervisor run processes
-boardswapcmds = ["sudo supervisorctl start MLB","sudo supervisorctl start NHL"] #commands to run various boards/processes
+boardnames = ["MLB","NHL"] #commands to run various boards/processes
 timetohold = 5 # time to hold button before executing shutdown
 buttonnumber = 3 # number of the button (actual pin) being used for the button
 x = 0 # state tracking variable
@@ -26,10 +26,16 @@ def released(btn):
 	if not btn.was_held:
 		pressed()
 	time.sleep(1)
-	if x == len(boardswapcmds): # resets counter
+	if x == len(boardnames): # resets counter
 		x = 0
-	os.system(killallcmd)  # kills all supervisor processes
-	os.system(boardswapcmds[x])  # kills all supervisor processes
+	y = 0
+	while y < len(boardnames):  # iterates through all boards except selected and kills them
+		if y != x:
+			execcommand = "sudo supervisorctl stop %s" % boardnames[y]
+			os.system(execcommand)
+		y = y + 1
+	execcommand = "sudo supervisorctl start %s" % boardnames[x]
+	os.system(execcommand)  # runs the board
 	x = x + 1
 	btn.was_held = False
 
