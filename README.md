@@ -7,10 +7,11 @@ This is pretty basic.  You need the following:
 - supervisor properly setup to run ALL the boards you want run
 - some led boards (NHL https://github.com/riffnshred/nhl-led-scoreboard and MLB https://github.com/MLB-LED-Scoreboard/mlb-led-scoreboard)
 
-All you should need to do is go into the python script, make sure things are set for the commands to start/stop your board related supervisor processes.  
+All you should need to do is go into the python script, make sure things are set for the names of your supervisor processesfor your led-boards.  
 
-Also, on a long hold (time can be set in the script) the pi will shutdown.  
-
-You can also change the button that's it's configured for - as of now, it's 3 so that you can turn the pi back on after shutting it down.  
+Specifically, the available settings are:
+**boardnames** - list of the names of your supervisor processes
+**timetohold** - number of seconds to hold the button until the Pi shuts down.
+**buttonnumber** - pin number your using for your button (using 3 will let you restart the Pi via a button press)
 
 One issue - when you do the 'shutdown' hold, it will start executing the board flip routine first.  Happy to incorporate a better way to do that, but my skills are...minimal.
